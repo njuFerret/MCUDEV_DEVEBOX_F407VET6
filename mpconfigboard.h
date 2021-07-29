@@ -1,6 +1,6 @@
 #define MICROPY_HW_BOARD_NAME       "MCUDEV DEVEBOX STM32F407VE"
 #define MICROPY_HW_MCU_NAME         "STM32F407VE"
-#define MICROPY_HW_FLASH_FS_LABEL   "DEVEBOXF407VE"
+#define MICROPY_HW_FLASH_FS_LABEL   "MiniF407VE"
 
 // 1 = use internal flash (512 KByte)
 // 0 = use onboard SPI flash (2 MByte) Winbond W25Q16
@@ -15,9 +15,9 @@
 #define MICROPY_HW_ENABLE_SDCARD    (0)		// it has a sd scard, but i am not sure what the detect pin is, yet
 
 // HSE is 8MHz
-#define MICROPY_HW_CLK_PLLM (8) // divide external clock by this to get 1MHz
-#define MICROPY_HW_CLK_PLLN (336) // PLL clock in MHz
-#define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV2) // divide PLL clock by this to get core clock
+#define MICROPY_HW_CLK_PLLM (4) // divide external clock by this to get 1MHz
+#define MICROPY_HW_CLK_PLLN (168) // PLL clock in MHz
+#define MICROPY_HW_CLK_PLLP (2) // divide PLL clock by this to get core clock
 #define MICROPY_HW_CLK_PLLQ (7) // divide core clock by this to get 48MHz
 
 // The board has a 32kHz crystal for the RTC
