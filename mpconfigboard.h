@@ -2,10 +2,6 @@
 #define MICROPY_HW_MCU_NAME         "STM32F407VE"
 #define MICROPY_HW_FLASH_FS_LABEL   "MiniF407VE"
 
-// 1 = use internal flash (512 KByte)
-// 0 = use onboard SPI flash (2 MByte) Winbond W25Q16
-#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
-
 #define MICROPY_HW_HAS_SWITCH       (1)		// has 1 button KEY0
 #define MICROPY_HW_HAS_FLASH        (1)
 #define MICROPY_HW_ENABLE_RNG       (1)
@@ -106,8 +102,15 @@
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_low(pin))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_high(pin))
 
+// 1 = use internal flash (512 KByte)
+// 0 = use onboard SPI flash (2 MByte) Winbond W25Q16
+#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (0)
+
 // If using onboard SPI flash
 #if !MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE
+
+// fix "error: unknown type name 'mp_spiflash_cache_t'"
+#define MICROPY_HW_SPIFLASH_ENABLE_CACHE (1)
 
 // Winbond W25Q16 SPI Flash = 16 Mbit (2 MByte)
 #define MICROPY_HW_SPIFLASH_SIZE_BITS (16 * 1024 * 1024)
