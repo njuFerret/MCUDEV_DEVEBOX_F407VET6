@@ -1,10 +1,6 @@
 #define MICROPY_HW_BOARD_NAME       "MCUDEV DEVEBOX STM32F407VE"
 #define MICROPY_HW_MCU_NAME         "STM32F407VE"
-#define MICROPY_HW_FLASH_FS_LABEL   "DEVEBOXF407VE"
-
-// 1 = use internal flash (512 KByte)
-// 0 = use onboard SPI flash (2 MByte) Winbond W25Q16
-#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
+#define MICROPY_HW_FLASH_FS_LABEL   "MiniF407VE"
 
 #define MICROPY_HW_HAS_SWITCH       (1)		// has 1 button KEY0
 #define MICROPY_HW_HAS_FLASH        (1)
@@ -12,12 +8,12 @@
 #define MICROPY_HW_ENABLE_RTC       (1)
 #define MICROPY_HW_ENABLE_DAC       (1)
 #define MICROPY_HW_ENABLE_USB       (1)
-#define MICROPY_HW_ENABLE_SDCARD    (0)		// it has a sd scard, but i am not sure what the detect pin is, yet
+#define MICROPY_HW_ENABLE_SDCARD    (1)		// it has a sd scard, but i am not sure what the detect pin is, yet
 
 // HSE is 8MHz
-#define MICROPY_HW_CLK_PLLM (8) // divide external clock by this to get 1MHz
-#define MICROPY_HW_CLK_PLLN (336) // PLL clock in MHz
-#define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV2) // divide PLL clock by this to get core clock
+#define MICROPY_HW_CLK_PLLM (4) // divide external clock by this to get 1MHz
+#define MICROPY_HW_CLK_PLLN (168) // PLL clock in MHz
+#define MICROPY_HW_CLK_PLLP (2) // divide PLL clock by this to get core clock
 #define MICROPY_HW_CLK_PLLQ (7) // divide core clock by this to get 48MHz
 
 // The board has a 32kHz crystal for the RTC
@@ -106,8 +102,15 @@
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_low(pin))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_high(pin))
 
+// 1 = use internal flash (512 KByte)
+// 0 = use onboard SPI flash (2 MByte) Winbond W25Q16
+#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (0)
+
 // If using onboard SPI flash
 #if !MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE
+
+// fix "error: unknown type name 'mp_spiflash_cache_t'"
+#define MICROPY_HW_SPIFLASH_ENABLE_CACHE (1)
 
 // Winbond W25Q16 SPI Flash = 16 Mbit (2 MByte)
 #define MICROPY_HW_SPIFLASH_SIZE_BITS (16 * 1024 * 1024)
@@ -132,9 +135,9 @@ extern struct _spi_bdev_t spi_bdev;
 #endif
 
 // SD card detect switch
-//	#define MICROPY_HW_SDCARD_DETECT_PIN        (pin_A8)	// nope
-//	#define MICROPY_HW_SDCARD_DETECT_PULL       (GPIO_PULLUP)
-//	#define MICROPY_HW_SDCARD_DETECT_PRESENT    (GPIO_PIN_RESET)
+#define MICROPY_HW_SDCARD_DETECT_PIN        (pin_A8)	// nope
+#define MICROPY_HW_SDCARD_DETECT_PULL       (GPIO_PULLUP)
+#define MICROPY_HW_SDCARD_DETECT_PRESENT    (GPIO_PIN_RESET)
 // 1      - PC10 - DAT2/RES
 // 2      - PC11 - CD/DAT3/CS
 // 3      - PD2  - CMD/DI
